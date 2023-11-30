@@ -23,10 +23,21 @@ interface ProductModalProps {
   visible: boolean;
   onClose: () => void;
   product: Product | null;
+  onAddToCart: (product: Product) => void;
 }
 
-export function ProductModal({ visible, onClose, product }: ProductModalProps) {
+export function ProductModal({
+  visible,
+  onClose,
+  product,
+  onAddToCart
+}: ProductModalProps) {
   if (!product) return null;
+
+  function handleAddToCart() {
+    onAddToCart(product!);
+    onClose();
+  }
 
   return (
     <Modal
@@ -86,7 +97,7 @@ export function ProductModal({ visible, onClose, product }: ProductModalProps) {
               {formatCurrency(product.price)}
             </Text>
           </PriceContainer>
-          <Button onPress={() => alert('adicionado ao pedido')}>
+          <Button onPress={handleAddToCart}>
             Adicionar ao pedido
           </Button>
         </FooterContainer>
